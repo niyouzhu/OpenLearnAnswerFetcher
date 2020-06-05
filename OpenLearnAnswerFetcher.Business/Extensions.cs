@@ -15,6 +15,14 @@ namespace System.Collections.Generic
                 action(item);
             }
         }
+
+        public static void Add<T>(this ICollection<T> source, IEnumerable<T> range)
+        {
+            foreach (var item in range)
+            {
+                source.Add(item);
+            }
+        }
     }
 }
 
@@ -25,7 +33,7 @@ namespace System.IO
     {
         public static void SaveAsFile(this Stream stream, string filePath)
         {
-            using(var fileStream = File.OpenWrite(filePath))
+            using (var fileStream = File.OpenWrite(filePath))
             {
                 stream.CopyTo(fileStream);
                 fileStream.Flush();

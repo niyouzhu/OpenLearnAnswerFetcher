@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using Ookii.Dialogs.Wpf;
+﻿using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,34 +11,39 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace OpenLearnAnswerFetcher.Client
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Simulator.xaml
     /// </summary>
-    public partial class MainWindow : Window, IView
+    public partial class SimulatorWindow : Window, ISimulatorView
     {
-        public MainWindow()
+        public SimulatorWindow()
         {
             InitializeComponent();
         }
 
+        public string GetHeader
+        {
+            get
+            {
+                return TextBoxHeader.Text;
+            }
+        }
 
-        private Presenter _presenter;
+        private SimulatorPresetner _presenter;
 
-        public Presenter Presenter
+        public SimulatorPresetner Presenter
         {
             get
             {
                 if (_presenter == null)
-                    _presenter = new Presenter(this, new ViewModel());
+                    _presenter = new SimulatorPresetner(this, new SimulatorViewModel());
                 return _presenter;
             }
         }
-
         public string GetSavedFilePath
         {
             get
@@ -61,21 +65,13 @@ namespace OpenLearnAnswerFetcher.Client
                 throw new Exception("Please input file name.");
             }
         }
-
-        public string GetJsonString()
+        private async void ButtonSimulator_Click(object sender, RoutedEventArgs e)
         {
-            return TextBoxJsonString.Text;
-
-        }
-
-        private void ButtonSubmit_Click(object sender, RoutedEventArgs e)
-        {
-            if (Presenter.Save())
+            if (await Presenter.Work())
             {
-                MessageBox.Show("Done!");
+                MessageBox.Show("Done");
             }
+
         }
-
-
     }
 }

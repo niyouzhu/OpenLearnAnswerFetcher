@@ -1,0 +1,10 @@
+﻿Host: learn.open.com.cn
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0
+Accept: */*
+Accept-Language: zh-CN,en-US;q=0.7,en;q=0.3
+Accept-Encoding: gzip, deflate
+X-Requested-With: XMLHttpRequest
+X-Tingyun-Id: cNqxxjahoTs;r=165951347
+Connection: keep-alive
+Referer: http://learn.open.com.cn/StudentCenter/MyLearning/MyWork?t=fe770796-5b22-4db0-b8d7-e07c2bc1860f
+Cookie: isShowFirseLesson=false; up_page_stime_100200=1591165949143; up_beacon_vist_count_100200=5; __jsluid_h=b39a4dcdf88cfe73dbcbad4bf9e0abd5; b_t_s_100200=da8ffcc4-f422-4c11-8576-09db0d071b71; up_first_date=2020-06-02; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%22niyouzhu%22%2C%22first_id%22%3A%2217272ade3104cb-0823cea5ffbf45-4c302d7c-1049088-17272ade3110%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_referrer%22%3A%22%22%7D%2C%22%24device_id%22%3A%2217272ade3104cb-0823cea5ffbf45-4c302d7c-1049088-17272ade3110%22%7D;up_beacon_user_id_100200=niyouzhu; up_beacon_uni_id_100200=10145; up_page_stime_100200=1591163152694; up_beacon_vist_count_100200=1; up_beacon_id_100200=da8ffcc4-f422-4c11-8576-09db0d071b71-1591163152698; TY_SESSION_ID=5225f686-f127-477a-ad86-b4c3494f88d1; Hm_lpvt_686401bd1a1f7184252b460af0f4337e=1591165949; ASP.NET_SessionId=drsor0w531x3gzj14zynndj5

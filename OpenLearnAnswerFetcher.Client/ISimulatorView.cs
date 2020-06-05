@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace OpenLearnAnswerFetcher.Client
 {
-    public interface IView
+    public interface ISimulatorView
     {
+        SimulatorPresetner Presenter { get; }
 
-        string GetJsonString();
-
-        Presenter Presenter { get; }
+        string GetHeader { get; }
 
         string GetSavedFilePath { get; }
-
     }
 }

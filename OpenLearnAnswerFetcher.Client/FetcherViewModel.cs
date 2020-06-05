@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OpenLearnAnswerFetcher.Client
 {
-    public class ViewModel
+    public class FetcherViewModel
     {
 
         public string Id { get; set; }
@@ -19,16 +19,16 @@ namespace OpenLearnAnswerFetcher.Client
         [Order(2)]
         public string[] Answers { get; set; }
 
-        public static IEnumerable<ViewModel> GetResults(string jsonString)
+        public static IEnumerable<FetcherViewModel> GetResults(string jsonString)
         {
             var analyser = new AnswerAnalyser(jsonString);
             var results = analyser.Analyse();
 
-            var rt = new List<ViewModel>(results.Count);
+            var rt = new List<FetcherViewModel>(results.Count);
             foreach (var item in results)
             {
 
-                rt.Add(new ViewModel() { Id = item.Question.Id, Title = item.Question.Title, Answers = item.Answer.Result });
+                rt.Add(new FetcherViewModel() { Id = item.Question.Id, Title = item.Question.Title, Answers = item.Answer.Result });
             }
             return rt;
 
@@ -36,7 +36,7 @@ namespace OpenLearnAnswerFetcher.Client
 
     }
 
-    public class ExcelViewModel
+    public class FetcherExcelViewModel
     {
         [DisplayName("题目")]
         [Order(1)]
@@ -45,7 +45,7 @@ namespace OpenLearnAnswerFetcher.Client
         [Order(2)]
         public string Answers { get; set; }
 
-        public ExcelViewModel(ViewModel model)
+        public FetcherExcelViewModel(FetcherViewModel model)
         {
             Title = model.Title;
             foreach (var item in model.Answers)
@@ -77,12 +77,12 @@ namespace OpenLearnAnswerFetcher.Client
 
         }
 
-        public static IEnumerable<ExcelViewModel> ConvertFrom(IEnumerable<ViewModel> source)
+        public static IEnumerable<FetcherExcelViewModel> ConvertFrom(IEnumerable<FetcherViewModel> source)
         {
-            var rt = new List<ExcelViewModel>(source.Count());
+            var rt = new List<FetcherExcelViewModel>(source.Count());
             foreach (var item in source)
             {
-                rt.Add(new ExcelViewModel(item));
+                rt.Add(new FetcherExcelViewModel(item));
             }
             return rt;
         }

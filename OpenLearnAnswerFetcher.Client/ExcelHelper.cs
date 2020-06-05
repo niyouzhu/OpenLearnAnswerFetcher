@@ -1,6 +1,7 @@
 ﻿using NPOI.HSSF.UserModel;
 using NPOI.HSSF.Util;
 using NPOI.SS.UserModel;
+using OpenLearnAnswerFetcher.Business;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 
-namespace OpenLearnAnswerFetcher.Business
+namespace OpenLearnAnswerFetcher.Client
 {
     public class ExcelHelper
     {
@@ -54,6 +55,67 @@ namespace OpenLearnAnswerFetcher.Business
                 headerRow.ElementAt(i).CellStyle = headerStyle;
                 sheet.AutoSizeColumn(i);
             }
+            MemoryStream memoryStream = new MemoryStream();
+            workbook.Write(memoryStream);
+            memoryStream.Position = 0;
+            memoryStream.Flush();
+            return memoryStream;
+        }
+
+        public static Stream ExportWrongQuestions(IEnumerable<SimulatorViewModel> source)
+        {
+            var workbook = new HSSFWorkbook();
+            List<string> sheetNames = new List<string>(); //Avoid the same sheet name in excel
+            foreach (var questionDetails in source)
+            {
+                string sheetName = questionDetails.ExerciseName;
+                if (questionDetails.ExerciseName?.Length > 20)
+                {
+                    var startIndex = questionDetails.ExerciseName.Length - 20;
+                    sheetName = questionDetails.ExerciseName.Substring(startIndex);
+                }
+                if (sheetNames.Any(it => string.Equals(it, sheetName, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    sheetName = sheetName + new Random().GetHashCode().ToString().ElementAt(0);
+                }
+                sheetNames.Add(sheetName);
+                var sheet = workbook.CreateSheet(sheetName);
+                var headerRow = sheet.CreateRow(0);
+                Type resultType = typeof(SimulatorViewModel.QuestionDetail);
+                var attributeInfos = GetPropertiesHaveAttribute(resultType).OrderBy(it => it.OrderNum);
+                WriteHeader(headerRow, attributeInfos);
+                var redFont = workbook.CreateFont();
+                redFont.Color = HSSFColor.Red.Index;
+                var redCellStyle = workbook.CreateCellStyle();
+                redCellStyle.SetFont(redFont);
+                redCellStyle.Alignment = HorizontalAlignment.Center;
+                var normalCellStyle = workbook.CreateCellStyle();
+                normalCellStyle.Alignment = HorizontalAlignment.Center;
+                for (int i = 0; i < questionDetails.Questions.Count(); i++)
+                {
+                    var line = questionDetails.Questions.ElementAt(i);
+                    var row = sheet.CreateRow(i + 1);
+                    WriteLine(row, attributeInfos, line);
+                    foreach (var cell in row.Cells)
+                    {
+                        cell.CellStyle = normalCellStyle;
+                    }
+
+                }
+
+                var headerStyle = workbook.CreateCellStyle();
+                var headerFont = workbook.CreateFont();
+                headerFont.IsBold = true;
+                headerStyle.Alignment = HorizontalAlignment.Center;
+                headerStyle.SetFont(headerFont);
+
+                for (int i = 0; i < headerRow.Count(); i++)
+                {
+                    headerRow.ElementAt(i).CellStyle = headerStyle;
+                    sheet.AutoSizeColumn(i);
+                }
+            }
+
             MemoryStream memoryStream = new MemoryStream();
             workbook.Write(memoryStream);
             memoryStream.Position = 0;

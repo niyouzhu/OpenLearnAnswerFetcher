@@ -8,24 +8,24 @@ using System.Threading.Tasks;
 
 namespace OpenLearnAnswerFetcher.Client
 {
-    public class Presenter
+    public class FetcherPresenter
     {
 
-        public Presenter(IView view, ViewModel model)
+        public FetcherPresenter(IFetcherView view, FetcherViewModel model)
         {
             View = view;
             Model = model;
         }
 
-        public IView View { get; }
+        public IFetcherView View { get; }
 
-        public ViewModel Model { get; }
+        public FetcherViewModel Model { get; }
 
 
-        public IEnumerable<ViewModel> Analyse()
+        public IEnumerable<FetcherViewModel> Analyse()
         {
             var jsonString = View.GetJsonString();
-            return ViewModel.GetResults(jsonString);
+            return FetcherViewModel.GetResults(jsonString);
         }
 
         public string GetSavedFilePath()
@@ -37,7 +37,7 @@ namespace OpenLearnAnswerFetcher.Client
         public bool Save()
         {
             var results = Analyse();
-            using (var stream = ExcelHelper.Export(ExcelViewModel.ConvertFrom(results)))
+            using (var stream = ExcelHelper.Export(FetcherExcelViewModel.ConvertFrom(results)))
             {
                 stream.SaveAsFile(GetSavedFilePath());
                 return true;
